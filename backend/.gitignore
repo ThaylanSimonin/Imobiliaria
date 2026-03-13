@@ -1,0 +1,37 @@
+# Ambiente virtual Python
+venv/
+.env
+
+# Cache Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Arquivos de banco local
+instance/
+*.db
+*.sqlite3
+
+# Logs
+*.log
+
+# Arquivos de build
+dist/
+build/
+
+# Node (caso use ferramentas JS)
+node_modules/
+package-lock.json
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+
+# Variáveis de ambiente
+.env
+.env.local
