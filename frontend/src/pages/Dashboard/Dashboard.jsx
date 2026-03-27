@@ -28,8 +28,8 @@ export default function Dashboard() {
 
   async function carregarDados() {
 
-    const imoveisRes = await axios.get("http://localhost:5100/api/imoveis");
-    const clientesRes = await axios.get("http://localhost:5100/api/clientes");
+    const imoveisRes = await axios.get("http://localhost:5300/api/imoveis");
+    const clientesRes = await axios.get("http://localhost:5300/api/clientes");
 
     setImoveis(imoveisRes.data);
     setClientes(clientesRes.data);

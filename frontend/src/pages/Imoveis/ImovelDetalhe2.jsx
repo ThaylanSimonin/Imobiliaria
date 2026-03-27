@@ -11,7 +11,7 @@ function ImovelDetalhe() {
 
   useEffect(() => {
 
-    axios.get(`http://localhost:5100/api/imoveis/${id}`)
+    axios.get(`http://localhost:5300/api/imoveis/${id}`)
       .then(res => setImovel(res.data))
       .catch(err => console.error(err))
 

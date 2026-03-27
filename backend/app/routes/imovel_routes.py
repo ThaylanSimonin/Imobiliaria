@@ -1,11 +1,11 @@
 from flask import Blueprint, request, jsonify
-from app import db
+from app.extensions import db  
 from app.models.imovel import Imovel
 
 imoveis_bp = Blueprint("imoveis", __name__)
 
 # LISTAR
-@imoveis_bp.route("/", methods=["GET"])
+@imoveis_bp.route("/", methods=["GET"]) 
 def listar_imoveis():
 
     imoveis = Imovel.query.all()
@@ -13,7 +13,6 @@ def listar_imoveis():
     resultado = []
 
     for imovel in imoveis:
-
         fotos = [foto.arquivo for foto in imovel.fotos] if hasattr(imovel, "fotos") else []
 
         resultado.append({
@@ -24,19 +23,8 @@ def listar_imoveis():
     return jsonify(resultado)
 
 
-# BUSCAR UM IMÓVEL (COM FOTOS)
-@imoveis_bp.route("/<int:id>", methods=["GET"])
-def buscar_imovel(id):
-
-    imovel = Imovel.query.get_or_404(id)
-
-    return jsonify({
-        **imovel.to_dict(),
-    })
-
-
 # CRIAR IMÓVEL 
-@imoveis_bp.route("/", methods=["POST"])
+@imoveis_bp.route("/", methods=["POST"]) 
 def criar_imovel():
 
     data = request.form
@@ -64,7 +52,7 @@ def criar_imovel():
 
 
 # EDITAR
-@imoveis_bp.route("/<int:id>", methods=["PUT"])
+@imoveis_bp.route("/<int:id>", methods=["PUT"])  
 def editar_imovel(id):
 
     imovel = Imovel.query.get_or_404(id)
@@ -89,7 +77,7 @@ def editar_imovel(id):
 
 
 # EXCLUIR
-@imoveis_bp.route("/<int:id>", methods=["DELETE"])
+@imoveis_bp.route("/<int:id>", methods=["DELETE"]) 
 def deletar_imovel(id):
 
     imovel = Imovel.query.get_or_404(id)

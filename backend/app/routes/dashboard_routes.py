@@ -2,20 +2,18 @@ from flask import Blueprint, jsonify, request
 from app.models.imovel import Imovel
 from app.models.cliente import Cliente
 from app.models.venda import Venda
-from app import db
+from app.extensions import db  
 from sqlalchemy import extract, func
-from datetime import datetime
+from datetime import datetime 
 
-dashboard_bp = Blueprint("dashboard", __name__, url_prefix="/dashboard")
+dashboard_bp = Blueprint("dashboard", __name__)
 
-
-@dashboard_bp.route("/faturamento-mensal")
+@dashboard_bp.route("/faturamento-mensal", methods=["GET"])
 def faturamento_mensal():
 
     ano = request.args.get("ano", type=int)
 
     if not ano:
-        from datetime import datetime
         ano = datetime.now().year
 
     resultado = (
@@ -37,7 +35,8 @@ def faturamento_mensal():
         for r in resultado
     ])
 
-@dashboard_bp.route("/resumo")
+
+@dashboard_bp.route("/resumo", methods=["GET"])
 def resumo():
 
     total_imoveis = Imovel.query.count()
@@ -54,7 +53,7 @@ def resumo():
     })
 
 
-@dashboard_bp.route("/vendas-mensais")
+@dashboard_bp.route("/vendas-mensais", methods=["GET"])
 def vendas_mensais():
 
     ano = request.args.get("ano", type=int)

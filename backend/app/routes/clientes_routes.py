@@ -1,12 +1,11 @@
 from flask import Blueprint, request, jsonify
-from app import db
+from app.extensions import db
 from app.models.cliente import Cliente
 import re
 
 cliente_bp = Blueprint("clientes", __name__)
 
 # LISTAR
-@cliente_bp.route("", methods=["GET"])
 @cliente_bp.route("/", methods=["GET"])
 def listar_clientes():
     clientes = Cliente.query.all()
@@ -21,9 +20,8 @@ def buscar_cliente(id):
 
 
 # BUSCAR POR CPF
-@cliente_bp.route("/buscar-por-cpf/<cpf>", methods=["GET"])
+@cliente_bp.route("/cpf/<cpf>", methods=["GET"])
 def buscar_por_cpf(cpf):
-
     cpf = re.sub(r"\D", "", cpf)
 
     cliente = Cliente.query.filter_by(cpf=cpf).first()
@@ -31,21 +29,14 @@ def buscar_por_cpf(cpf):
     if not cliente:
         return jsonify({"erro": "Cliente não encontrado"}), 404
 
-    return jsonify({
-        "id": cliente.id,
-        "nome": cliente.nome,
-        "cpf": cliente.cpf
-    })
+    return jsonify(cliente.to_dict())
 
 
 # CRIAR
-@cliente_bp.route("", methods=["POST"])
 @cliente_bp.route("/", methods=["POST"])
 def criar_cliente():
-
     data = request.json
 
-    import re
     cpf = re.sub(r"\D", "", data.get("cpf"))
 
     cliente = Cliente(
@@ -65,7 +56,6 @@ def criar_cliente():
 # ATUALIZAR
 @cliente_bp.route("/<int:id>", methods=["PUT"])
 def atualizar_cliente(id):
-
     cliente = Cliente.query.get_or_404(id)
     data = request.json
 
@@ -83,7 +73,6 @@ def atualizar_cliente(id):
 # DELETAR
 @cliente_bp.route("/<int:id>", methods=["DELETE"])
 def deletar_cliente(id):
-
     cliente = Cliente.query.get_or_404(id)
 
     db.session.delete(cliente)

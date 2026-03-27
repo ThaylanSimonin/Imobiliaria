@@ -21,7 +21,7 @@ function FaturamentoMensalChart() {
 
   useEffect(() => {
 
-    fetch(`http://localhost:5100/api/dashboard/faturamento-mensal?ano=${ano}`)
+    fetch(`http://localhost:5300/api/dashboard/faturamento-mensal?ano=${ano}`)
       .then(res => res.json())
       .then(data => {
 
