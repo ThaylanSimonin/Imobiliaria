@@ -21,7 +21,7 @@ function VendasMensaisChart() {
 
   useEffect(() => {
 
-    fetch(`http://localhost:5300/api/dashboard/vendas-mensais?ano=${ano}`)
+    fetch(`http://localhost:5100/api/dashboard/vendas-mensais?ano=${ano}`)
       .then(res => res.json())
       .then(data => {
 

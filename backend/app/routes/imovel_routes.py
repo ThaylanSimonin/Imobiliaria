@@ -75,6 +75,18 @@ def editar_imovel(id):
 
     return jsonify(imovel.to_dict())
 
+# BUSCAR IMÓVEL POR ID
+@imoveis_bp.route("/<int:id>", methods=["GET"])
+def buscar_imovel(id):
+
+    imovel = Imovel.query.get_or_404(id)
+
+    fotos = [foto.arquivo for foto in imovel.fotos] if hasattr(imovel, "fotos") else []
+
+    return jsonify({
+        **imovel.to_dict(),
+        "fotos": fotos
+    })
 
 # EXCLUIR
 @imoveis_bp.route("/<int:id>", methods=["DELETE"]) 

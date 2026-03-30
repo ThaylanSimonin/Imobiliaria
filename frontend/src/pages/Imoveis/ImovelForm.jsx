@@ -71,7 +71,7 @@ export default function ImovelForm() {
 
     try {
 
-      const response = await api.get(`/clientes/buscar-por-cpf/${cpf}`);
+      const response = await api.get(`/clientes/cpf/${cpf}`);
 
       setClienteNome(response.data.nome);
       setClienteId(response.data.id);

@@ -52,7 +52,7 @@ python3 run.py
 
 Servidor rodará em:
 
-http://localhost:5300
+http://localhost:5100
 
 ### Frontend
 
@@ -62,4 +62,4 @@ npm run dev
 
 Aplicação rodará em:
 
-http://localhost:5400
+http://localhost:5200
