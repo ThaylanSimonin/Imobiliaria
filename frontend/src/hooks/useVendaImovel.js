@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { registrarVenda } from "../services/vendaService";
 import { somenteNumeros } from "../utils/validators";
 import { buscarClientePorCpf } from "../services/clienteService";
+import { atualizarImovel } from "../services/imovelService";
 
 export default function useVendaImovel(carregarImoveis) {
 
@@ -79,14 +80,46 @@ useEffect(() => {
     try {
 
       await registrarVenda({
-        imovel_id: imovelSelecionado.id,
-        cliente_id: comprador.id,
-        valor_venda: valorVenda
-      });
+  imovel_id: imovelSelecionado.id,
+  cliente_id: comprador.id,
+  valor_venda: valorVenda
+});
+
+// 🔥 NOVO: definir status baseado na finalidade
+let statusFinal;
+
+if (imovelSelecionado.finalidade === "aluguel") {
+  statusFinal = "alugado";
+} else {
+  statusFinal = "vendido";
+}
+
+// 🔥 NOVO: atualizar imóvel
+const formData = new FormData();
+
+formData.append("titulo", imovelSelecionado.titulo);
+formData.append("valor", imovelSelecionado.valor);
+formData.append("tipo", imovelSelecionado.tipo);
+formData.append("cep", imovelSelecionado.cep);
+formData.append("estado", imovelSelecionado.estado);
+formData.append("cidade", imovelSelecionado.cidade);
+formData.append("bairro", imovelSelecionado.bairro);
+formData.append("rua", imovelSelecionado.rua);
+formData.append("numero", imovelSelecionado.numero);
+formData.append("complemento", imovelSelecionado.complemento);
+formData.append("descricao", imovelSelecionado.descricao);
+formData.append("status", statusFinal);
+
+// 👇 importante manter cliente
+if (imovelSelecionado.cliente?.id) {
+  formData.append("cliente_id", imovelSelecionado.cliente.id);
+}
+
+await atualizarImovel(imovelSelecionado.id, formData);
 
       setNotificacao({
         tipo: "sucesso",
-        mensagem: "Venda registrada com sucesso!"
+        mensagem: "Negócio registrado com sucesso!"
       });
 
       setTimeout(() => setNotificacao(null), 3000);

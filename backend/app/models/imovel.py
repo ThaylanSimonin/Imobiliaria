@@ -5,6 +5,7 @@ class Imovel(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     titulo = db.Column(db.String(150), nullable=False)
+    finalidade = db.Column(db.String(20))
     cep = db.Column(db.String(10))
     estado = db.Column(db.String(2))
     cidade = db.Column(db.String(100))
@@ -24,6 +25,7 @@ class Imovel(db.Model):
         return {
             "id": self.id,
             "titulo": self.titulo,
+            "finalidade": self.finalidade,
             "valor": self.valor,
             "cep": self.cep,
             "estado": self.estado,

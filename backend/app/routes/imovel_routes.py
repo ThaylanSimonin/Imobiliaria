@@ -31,6 +31,7 @@ def criar_imovel():
 
     imovel = Imovel(
         titulo=data.get("titulo"),
+        finalidade=data.get("finalidade"),
         valor=data.get("valor"),
         tipo=data.get("tipo"),
         cep=data.get("cep"),
@@ -59,6 +60,7 @@ def editar_imovel(id):
     data = request.form
 
     imovel.titulo = data.get("titulo")
+    imovel.finalidade = data.get("finalidade")
     imovel.valor = data.get("valor")
     imovel.tipo = data.get("tipo")
     imovel.cep = data.get("cep")
@@ -69,7 +71,8 @@ def editar_imovel(id):
     imovel.numero = data.get("numero")
     imovel.complemento = data.get("complemento")
     imovel.descricao = data.get("descricao")
-    imovel.status = data.get("status")
+    if data.get("status"):
+      imovel.status = data.get("status")
 
     db.session.commit()
 

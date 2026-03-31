@@ -20,12 +20,16 @@ export default function VendaModal({
       <div className="bg-white p-6 rounded shadow w-96">
 
         <h2 className="text-xl font-bold mb-4">
-          Registrar Venda
+          {imovelSelecionado?.finalidade === "aluguel"
+            ? "Registrar Aluguel"
+            : imovelSelecionado?.finalidade === "venda"
+            ? "Registrar Venda"
+            : "Finalizar Negociação"}
         </h2>
 
         <input
           type="text"
-          placeholder="CPF do comprador"
+          placeholder="CPF do Cliente"
           value={cpfComprador}
           onChange={(e) => setCpfComprador(e.target.value)}
           className="border p-2 w-full mb-3"
@@ -60,7 +64,11 @@ export default function VendaModal({
 
         <input
           type="number"
-          placeholder="Valor da venda"
+          placeholder={
+            imovelSelecionado?.finalidade === "aluguel"
+            ? "Valor do aluguel"
+            : "Valor da venda"
+            }
           value={valorVenda}
           onChange={(e) => setValorVenda(e.target.value)}
           className="border p-2 w-full mb-4"
@@ -79,7 +87,9 @@ export default function VendaModal({
             onClick={confirmarVenda}
             className="bg-green-600 text-white px-4 py-2 rounded"
           >
-            Confirmar Venda
+            {imovelSelecionado?.finalidade === "aluguel"
+              ? "Confirmar Aluguel"
+              : "Confirmar Venda"}
           </button>
 
         </div>

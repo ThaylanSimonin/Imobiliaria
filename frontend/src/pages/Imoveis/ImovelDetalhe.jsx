@@ -80,6 +80,8 @@ function ImovelDetalhe() {
           <p><strong>Tipo:</strong> {imovel.tipo}</p>
           <p><strong>Status:</strong> {imovel.status}</p>
 
+          <p><strong>Modalidade:</strong> {imovel.finalidade}</p>
+
           <p>
            <strong>Endereço:</strong>
             {imovel.rua}, {imovel.numero} - {imovel.bairro}, {imovel.cidade} - {imovel.estado}

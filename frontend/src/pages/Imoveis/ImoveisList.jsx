@@ -100,7 +100,7 @@ function ImoveisList() {
 
         <thead className="bg-gray-200">
           <tr>
-            <th className="p-3 text-left">ID</th>
+            <th className="p-3 text-left">Modalidade</th>
             <th className="p-3 text-left">Título</th>
             <th className="p-3 text-left">Valor</th>
             <th className="p-3 text-left">Bairro</th>
@@ -115,7 +115,7 @@ function ImoveisList() {
           {imoveis.map((imovel) => (
             <tr key={imovel.id} className="border-t">
 
-              <td className="p-3">{imovel.id}</td>
+              <td className="p-3">{imovel.finalidade}</td>
 
               <td className="p-3">{imovel.titulo}</td>
 
@@ -135,16 +135,24 @@ function ImoveisList() {
               </td>
 
               <td className="p-3">
-                {imovel.status === "vendido" ? (
-                  <span className="text-red-600 font-semibold">
-                    Vendido
-                  </span>
-                ) : (
-                  <span className="text-green-600 font-semibold">
-                    Disponível
-                  </span>
+                {imovel.status === "disponivel" && (
+                <span className="text-green-600 font-semibold">
+                  Disponível
+                </span>
                 )}
-              </td>
+
+                {imovel.status === "vendido" && (
+                <span className="text-red-600 font-semibold">
+                  Vendido
+                </span>
+                )}
+
+                {imovel.status === "alugado" && (
+                <span className="text-blue-600 font-semibold">
+                  Alugado
+                </span>
+                )}
+                </td>
 
               <td className="p-3 flex gap-2">
 
@@ -157,14 +165,20 @@ function ImoveisList() {
 
                 <button
                   onClick={() => abrirModal(imovel)}
-                  disabled={imovel.status === "vendido"}
+                  disabled={imovel.status !== "disponivel"}
                   className={`px-3 py-1 rounded text-white ${
-                    imovel.status === "vendido"
-                      ? "bg-gray-400 cursor-not-allowed"
-                      : "bg-green-500"
+                imovel.status !== "disponivel"
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : imovel.finalidade === "aluguel"
+                  ? "bg-blue-500"
+                  : "bg-green-500"
                   }`}
                 >
-                  Vender
+                {imovel.finalidade === "aluguel"
+                   ? "Alugar"
+                   : imovel.finalidade === "venda"
+                   ? "Vender"
+                   : "Negociar"}
                 </button>
 
                 <button

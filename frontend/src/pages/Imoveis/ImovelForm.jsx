@@ -12,6 +12,7 @@ export default function ImovelForm() {
   const { id } = useParams();
 
   const [titulo, setTitulo] = useState("");
+  const [finalidade, setFinalidade] = useState("");
   const [valor, setValor] = useState("");
   const [tipo, setTipo] = useState("");
   const [cep, setCep] = useState("")
@@ -39,6 +40,7 @@ export default function ImovelForm() {
         const imovel = await buscarImovel(id);
 
         setTitulo(imovel.titulo || "");
+        setFinalidade(imovel.finalidade || "");
         setValor(imovel.valor || "");
         setTipo(imovel.tipo || "");
         setCep(imovel.cep || "");
@@ -134,6 +136,7 @@ export default function ImovelForm() {
     const formData = new FormData();
 
     formData.append("titulo", titulo);
+    formData.append("finalidade", finalidade);
     formData.append("valor", valor);
     formData.append("tipo", tipo);
     formData.append("cep", cep);
@@ -184,9 +187,29 @@ export default function ImovelForm() {
           className="border p-3 w-full rounded"
         />
 
+        <select
+          value={finalidade}
+          onChange={(e) => setFinalidade(e.target.value)}
+          className="border p-3 w-full rounded"
+        >
+        <option value="">Selecione a Modalidade</option>
+        <option value="venda">Venda</option>
+        <option value="aluguel">Aluguel</option>
+        <option value="ambos">Venda e Aluguel</option>
+        </select>
+
+
         <input
           type="number"
-          placeholder="Valor"
+          placeholder={
+            finalidade === "aluguel"
+              ? "Valor do Aluguel"
+              : finalidade === "venda"
+              ? "Valor do Imóvel"
+              : finalidade === "ambos"
+              ? "Valor (Venda ou Aluguel)"
+              : "Valor"
+          }
           value={valor}
           onChange={(e) => setValor(e.target.value)}
           min="0"
