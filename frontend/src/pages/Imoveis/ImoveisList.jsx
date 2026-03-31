@@ -178,7 +178,7 @@ function ImoveisList() {
                    ? "Alugar"
                    : imovel.finalidade === "venda"
                    ? "Vender"
-                   : "Negociar"}
+                   : "Negociado"}
                 </button>
 
                 <button
