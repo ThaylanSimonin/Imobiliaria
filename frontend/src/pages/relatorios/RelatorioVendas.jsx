@@ -73,6 +73,7 @@ function RelatorioVendas() {
               </td>
 
               <td className="p-3">{venda.data_venda}</td>
+              
 
             </tr>
 
