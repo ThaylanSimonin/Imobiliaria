@@ -60,7 +60,8 @@ def editar_imovel(id):
     data = request.form
 
     imovel.titulo = data.get("titulo")
-    imovel.finalidade = data.get("finalidade")
+    if data.get("finalidade"):
+      imovel.finalidade = data.get("finalidade")
     imovel.valor = data.get("valor")
     imovel.tipo = data.get("tipo")
     imovel.cep = data.get("cep")

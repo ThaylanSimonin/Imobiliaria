@@ -27,106 +27,110 @@ function ImovelDetalhe() {
 
   return (
 
-      <div style={{
-        border: "1px solid #ddd",
-        borderRadius: "8px",
-        padding: "20px",
-        background: "#fff"
-        }}>
+      <div className="p-8 max-w-5xl mx-auto">
 
-      <button
-        onClick={() => navigate("/imoveis")}
-        style={{
-        marginBottom: "20px",
-        background: "#1976d2",
-        color: "white",
-        border: "none",
-        padding: "8px 14px",
-        borderRadius: "6px",
-        cursor: "pointer"
-      }}
+  {/* VOLTAR */}
+  <button
+    onClick={() => navigate("/imoveis")}
+    className="mb-6 text-blue-600 hover:underline"
+  >
+    ← Voltar
+  </button>
+
+  {/* HEADER */}
+  <div className="bg-white shadow rounded-xl p-6 mb-6">
+
+    <h1 className="text-3xl font-bold">{imovel.titulo}</h1>
+
+    <div className="flex items-center justify-between mt-3">
+
+      <p className="text-2xl font-semibold text-green-600">
+        {imovel.valor?.toLocaleString("pt-BR", {
+          style: "currency",
+          currency: "BRL"
+        })}
+      </p>
+
+      {/* STATUS */}
+      <span className={`px-3 py-1 rounded-full text-sm font-semibold
+        ${
+          imovel.status === "disponivel"
+            ? "bg-green-100 text-green-700"
+            : imovel.status === "vendido"
+            ? "bg-red-100 text-red-700"
+            : "bg-blue-100 text-blue-700"
+        }`}
       >
-        ← Voltar
-      </button>
+        {imovel.status}
+      </span>
 
-      <h1 style={{ marginBottom: "5px" }}>{imovel.titulo}</h1>
+    </div>
 
-      <h2 style={{ color: "#2e7d32", marginTop: "0" }}>
-        R$ {imovel.valor}
+    {/* FINALIDADE */}
+    <div className="mt-3">
+      <span className="px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs">
+        {imovel.finalidade}
+      </span>
+    </div>
+
+  </div>
+
+  {/* GRID */}
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    {/* INFO PRINCIPAL */}
+    <div className="md:col-span-2 bg-white shadow rounded-xl p-6">
+
+      <h2 className="text-xl font-semibold mb-4">
+        Informações do Imóvel
       </h2>
 
-      <span style={{
-        background: "#e8f5e9",
-        color: "#2e7d32",
-        padding: "4px 10px",
-        borderRadius: "6px",
-        fontSize: "14px"
-        }}>
-        {imovel.status}
-       </span>
+      <div className="space-y-2 text-gray-700">
 
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "2fr 1fr",
-        gap: "30px",
-        marginTop: "30px"
-        }}>
+        <p><strong>Tipo:</strong> {imovel.tipo}</p>
 
-        {/* DADOS DO IMÓVEL */}
-        <div>
+        <p>
+          <strong>Endereço:</strong><br />
+          {imovel.rua}, {imovel.numero}<br />
+          {imovel.bairro} - {imovel.cidade}/{imovel.estado}
+        </p>
 
-          <h3>Informações do Imóvel</h3>
-
-          <p><strong>Tipo:</strong> {imovel.tipo}</p>
-          <p><strong>Status:</strong> {imovel.status}</p>
-
-          <p><strong>Modalidade:</strong> {imovel.finalidade}</p>
-
-          <p>
-           <strong>Endereço:</strong>
-            {imovel.rua}, {imovel.numero} - {imovel.bairro}, {imovel.cidade} - {imovel.estado}
-          </p>
-
-          {imovel.complemento && (
-            <p><strong>Complemento:</strong> {imovel.complemento}</p>
-          )}
-
-          <div style={{ marginTop: "25px" }}>
-
-           <h3>Descrição</h3>
-
-          <p style={{ lineHeight: "1.6", color: "#555" }}>
-          {imovel.descricao}
-          </p>
-
-        </div>
-
-        </div>
-
-        {/* PROPRIETÁRIO */}
-       {imovel.cliente && (
-
-      <div style={{
-        border: "1px solid #ddd",
-        borderRadius: "8px",
-        padding: "20px",
-        background: "#fafafa",
-        height: "fit-content"
-      }}>
-
-      <h3>Proprietário</h3>
-
-      <p><strong>Nome:</strong> {imovel.cliente.nome}</p>
-      <p><strong>Telefone:</strong> {imovel.cliente.telefone}</p>
-      <p><strong>CPF:</strong> {imovel.cliente.cpf}</p>
+        {imovel.complemento && (
+          <p><strong>Complemento:</strong> {imovel.complemento}</p>
+        )}
 
       </div>
 
-       )}
-
+      {/* DESCRIÇÃO */}
+      <div className="mt-6">
+        <h3 className="font-semibold mb-2">Descrição</h3>
+        <p className="text-gray-600 leading-relaxed">
+          {imovel.descricao}
+        </p>
       </div>
 
     </div>
+
+    {/* PROPRIETÁRIO */}
+    {imovel.cliente && (
+      <div className="bg-white shadow rounded-xl p-6 h-fit">
+
+        <h2 className="text-xl font-semibold mb-4">
+          Proprietário
+        </h2>
+
+        <div className="space-y-2 text-gray-700">
+          <p><strong>Nome:</strong> {imovel.cliente.nome}</p>
+          <p><strong>Telefone:</strong> {imovel.cliente.telefone}</p>
+          <p><strong>CPF:</strong> {imovel.cliente.cpf}</p>
+        </div>
+
+      </div>
+    )}
+
+  </div>
+
+</div>
 
   )
 }

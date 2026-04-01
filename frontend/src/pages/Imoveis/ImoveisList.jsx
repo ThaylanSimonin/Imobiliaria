@@ -127,7 +127,7 @@ function ImoveisList() {
               </td>
 
               <td className="p-3">
-                {imovel.bairro} - {imovel.cidade}
+                {imovel.bairro}
               </td>
 
               <td className="p-3">
@@ -164,22 +164,22 @@ function ImoveisList() {
                 </Link>
 
                 <button
-                  onClick={() => abrirModal(imovel)}
-                  disabled={imovel.status !== "disponivel"}
-                  className={`px-3 py-1 rounded text-white ${
-                imovel.status !== "disponivel"
-                  ? "bg-gray-400 cursor-not-allowed"
-                  : imovel.finalidade === "aluguel"
-                  ? "bg-blue-500"
-                  : "bg-green-500"
-                  }`}
-                >
-                {imovel.finalidade === "aluguel"
-                   ? "Alugar"
-                   : imovel.finalidade === "venda"
-                   ? "Vender"
-                   : "Negociado"}
-                </button>
+  onClick={() => abrirModal(imovel)}
+  disabled={imovel.status !== "disponivel"}
+  className={`px-3 py-1 rounded text-white ${
+    imovel.status !== "disponivel"
+      ? "bg-gray-400 cursor-not-allowed"
+      : imovel.finalidade === "aluguel"
+      ? "bg-blue-500"
+      : "bg-green-500"
+  }`}
+>
+  {imovel.status !== "disponivel"
+    ? "Negociado"
+    : imovel.finalidade === "aluguel"
+    ? "Alugar"
+    : "Vender"}
+</button>
 
                 <button
                   onClick={() => abrirModalExcluir(imovel)}
