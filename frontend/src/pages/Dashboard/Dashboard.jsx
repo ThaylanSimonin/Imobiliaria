@@ -21,6 +21,7 @@ export default function Dashboard() {
 
   const [imoveis, setImoveis] = useState([]);
   const [clientes, setClientes] = useState([]);
+  const [vendas, setVendas] = useState([]);
 
   useEffect(() => {
     carregarDados();
@@ -30,26 +31,37 @@ export default function Dashboard() {
 
     const imoveisRes = await axios.get("http://localhost:5100/api/imoveis");
     const clientesRes = await axios.get("http://localhost:5100/api/clientes");
+    const vendasRes = await axios.get("http://localhost:5100/api/vendas");
 
     setImoveis(imoveisRes.data);
     setClientes(clientesRes.data);
+    setVendas(vendasRes.data);
   }
 
   /* KPIs */
 
-  const totalImoveis = imoveis.length;
+  const totalImoveis = imoveis.length + vendas.length;
 
-  const imoveisVendidos = imoveis.filter(i => i.status === "vendido").length;
+  const imoveisVendidos = vendas.length;
 
-  const imoveisDisponiveis = imoveis.filter(i => i.status === "disponivel").length;
+  const clienteRegistrados = clientes.length;
 
-  const totalVendas = imoveis
-    .filter(i => i.status === "vendido")
-    .reduce((acc, i) => acc + Number(i.valor || 0), 0);
+  const totalVendas = vendas.reduce(
+    (acc, v) => acc + Number(v.valor_venda || 0),0);
 
   const valorDisponiveis = imoveis
     .filter(i => i.status === "disponivel")
     .reduce((acc, i) => acc + Number(i.valor || 0), 0);
+  
+  const disponiveisAluguel = imoveis.filter(
+    i => i.finalidade === "aluguel" && i.status === "disponivel").length;
+
+  const disponiveisVenda = imoveis.filter(
+    i => i.finalidade === "venda" && i.status === "disponivel").length;
+
+  const alugados = imoveis.filter(
+    i => i.status === "alugado").length;
+
 
   /* COMISSÃO POTENCIAL */
 
@@ -72,14 +84,9 @@ export default function Dashboard() {
   /* STATUS DOS IMÓVEIS */
 
   const statusData = [
-    {
-      name: "Disponível",
-      value: imoveisDisponiveis
-    },
-    {
-      name: "Vendido",
-      value: imoveisVendidos
-    }
+    { name: "Disponível", value: disponiveisVenda },
+    { name: "Vendido", value: imoveisVendidos },
+    { name: "Alugado", value: alugados }
   ];
 
   const cores = ["#16a34a", "#dc2626"];
@@ -104,7 +111,7 @@ export default function Dashboard() {
         <div className="bg-white p-6 rounded-xl shadow text-center">
           <p className="text-gray-500">Disponíveis</p>
           <h2 className="text-3xl font-bold text-green-600">
-            {imoveisDisponiveis}
+            {disponiveisVenda}
           </h2>
         </div>
 
@@ -117,18 +124,34 @@ export default function Dashboard() {
 
         <div className="bg-white p-6 rounded-xl shadow text-center">
           <p className="text-gray-500">Total em Vendas</p>
-          <h2 className="text-2xl font-bold text-green-700">
-
+          <h2 className="text-xl font-bold text-green-700 break-words leading-tight">
             {totalVendas.toLocaleString("pt-BR", {
               style: "currency",
-              currency: "BRL"
-            })}
-
-          </h2>
+              currency: "BRL"})}
+        </h2>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow text-center">
-          <p className="text-gray-500">Valor disponível</p>
+       <div className="bg-white p-6 rounded-xl shadow text-center">
+        <p className="text-gray-500">Disponíveis para Aluguel</p>
+        <h2 className="text-3xl font-bold text-blue-600">
+            {disponiveisAluguel}
+        </h2>
+      </div>
+
+      <div className="bg-white p-6 rounded-xl shadow text-center">
+          <p className="text-gray-500">Alugados</p>
+          <h2 className="text-3xl font-bold text-purple-600">
+            {alugados}
+        </h2>
+      </div>
+
+      <div className="bg-white p-6 rounded-xl shadow text-center">
+          <p className="text-gray-500">Clientes Registrados</p>
+          <h2 className="text-3xl font-bold">{clienteRegistrados}</h2>
+        </div>
+
+       <div className="bg-white p-6 rounded-xl shadow text-center">
+          <p className="text-gray-500">Vendas em Potêncial</p>
           <h2 className="text-xl font-bold text-blue-700">
             {valorDisponiveis.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
         </h2>
