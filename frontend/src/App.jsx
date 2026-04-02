@@ -13,6 +13,7 @@ import ClienteForm from "./pages/Clientes/ClienteForm";
 import Dashboard from "./pages/Dashboard/Dashboard";
 
 import RelatorioVendas from "./pages/relatorios/RelatorioVendas";
+import VendaDetalhe from "./pages/relatorios/VendaDetalhe";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/clientes/editar/:id" element={<ClienteForm />} />
 
           <Route path="/relatorios/vendas" element={<RelatorioVendas />} />
+          <Route path="/vendas/:id" element={<VendaDetalhe />} />
 
         </Routes>
 

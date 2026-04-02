@@ -130,7 +130,7 @@ function ImoveisList() {
 
               {/* PROPRIETÁRIO */}
               <td className="p-3">
-                {imovel.cliente?.nome || "Sem proprietário"}
+                {imovel.cliente?.nome || "Sem Registro"}
               </td>
 
               {/* STATUS */}

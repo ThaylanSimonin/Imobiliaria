@@ -49,7 +49,10 @@ def criar_venda():
     )
 
     # alterar status
-    imovel.status = "vendido"
+    if imovel.finalidade == "aluguel":
+      imovel.status = "alugado"
+    else:
+      imovel.status = "vendido"
 
     db.session.add(venda)
     db.session.commit()

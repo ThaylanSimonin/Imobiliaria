@@ -31,5 +31,7 @@ class Venda(db.Model):
             "imovel": self.imovel_nome,
             "comprador": self.cliente_nome,
             "valor_venda": self.valor_venda,
-            "data_venda": self.data_venda.isoformat() if self.data_venda else None
+            "data_venda": self.data_venda.isoformat() if self.data_venda else None,
+            "imovel_detalhes": self.imovel.to_dict() if self.imovel else None,
+            "cliente_detalhes": self.cliente.to_dict() if self.cliente else None
         }
